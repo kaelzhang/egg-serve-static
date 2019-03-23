@@ -1,7 +1,7 @@
 {
   "name": "egg-serve-static",
   "version": "1.0.0",
-  "description": "egg-serve-static",
+  "description": "Utilities to create roe/egg route definitions to serve static files.",
   "main": "src/index.js",
   "scripts": {
     "test": "nyc ava --timeout=10s --verbose test/*.test.js",
