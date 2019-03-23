@@ -4,8 +4,8 @@
   "description": "egg-serve-static",
   "main": "src/index.js",
   "scripts": {
-    "test": "nyc ava --timeout=10s",
-    "test-no-report": "NODE_DEBUG=egg-serve-static nyc ava --timeout=10s --verbose",
+    "test": "nyc ava --timeout=10s --verbose test/*.test.js",
+    "test-no-report": "NODE_DEBUG=egg-serve-static nyc ava --timeout=10s --verbose test/*.test.js",
     "lint": "eslint .",
     "posttest": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },

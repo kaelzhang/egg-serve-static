@@ -7,7 +7,7 @@ const error = require('./error')
 
 const ensurePath = s => ensureLeading(s, '/')
 
-const serve = (router, s, cwd) => {
+const serve = (app, s, cwd) => {
   Object.keys(s).forEach(staticPath => {
     const def = s[staticPath]
     const {
@@ -25,14 +25,13 @@ const serve = (router, s, cwd) => {
     }
 
     const serve = createServe(path.join(cwd, root), options)
-
     // Default static root
     if (staticPath === 'default') {
-      router.use(serve)
+      app.use(serve)
       return
     }
 
-    router.use(mount(ensurePath(staticPath), serve))
+    app.use(mount(ensurePath(staticPath), serve))
   })
 }
 
@@ -44,9 +43,7 @@ module.exports = ({
     throw error('INVALID_STATIC_ROOT', root)
   }
 
-  return ({
-    router
-  }) => {
-    serve(router, staticFiles, root)
+  return app => {
+    serve(app, staticFiles, root)
   }
 }

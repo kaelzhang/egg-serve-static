@@ -47,6 +47,7 @@ old/
 *-old/
 *-notrack/
 no-track/
+no-track.js
 build/
 combo/
 reference/

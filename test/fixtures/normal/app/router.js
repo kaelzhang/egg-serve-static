@@ -8,7 +8,8 @@ module.exports = define({
       root: 'cache',
       // miniseconds
       maxAge: 60000
-    }
+    },
+    default: 'default'
   },
 
   root: path.join(__dirname, '..')

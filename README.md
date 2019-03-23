@@ -15,7 +15,7 @@
 
 # egg-serve-static
 
-<!-- description -->
+Utilities to create [roe](https://github.com/kaelzhang/roe)/[egg](https://npmjs.org/package/egg) route definitions to serve static files.
 
 ## Install
 
@@ -25,8 +25,32 @@ $ npm i egg-serve-static
 
 ## Usage
 
+```
+project
+|-- app
+|   |-- router.js
+|-- static
+|   |-- a.js
+|-- compressed
+|   |-- a.min.js
+```
+
+app/router.js
+
 ```js
-import egg_serve_static from 'egg-serve-static'
+const define = require('egg-serve-static')
+
+module.exports = define({
+  static: {
+    '/js': 'static',
+    '/min': {
+      root: 'compressed',
+      // miniseconds
+      maxAge: 60000
+    }
+  },
+  root: '/path/to/project'
+})
 ```
 
 ## License
