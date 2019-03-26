@@ -2,6 +2,7 @@ const test = require('ava')
 const path = require('path')
 const {Roe} = require('roe')
 const supertest = require('supertest')
+const define = require('..')
 
 const content = `// a.js
 `
@@ -10,9 +11,7 @@ const fixture = s => path.join(__dirname, 'fixtures', s)
 
 const CASES = [
   ['/js/a.js', content],
-  ['/cached-js/a.js', content, 60],
-  ['/b.js', `// b.js
-`]
+  ['/cached-js/a.js', content, 60]
 ]
 
 let app
@@ -37,8 +36,18 @@ CASES.forEach(([url, c, maxAge = 0]) => {
   })
 })
 
+const REGEX_ERROR = /options\.root must be a string, but got undefined/
+
 test('invalid root', t => {
   t.throws(() => new Roe({
     baseDir: fixture('error')
-  }), /root must be a string, but got undefined/)
+  }), REGEX_ERROR)
+})
+
+test('invalid root, files: undefined', t => {
+  t.throws(() => define(), REGEX_ERROR)
+})
+
+test('invalid files', t => {
+  t.throws(() => define('aaa'), 'files must be an object, but got aaa')
 })

@@ -38,20 +38,26 @@ project
 app/router.js
 
 ```js
-const define = require('egg-serve-static')
+const serve = require('egg-serve-static')
 
-module.exports = define({
-  static: {
-    '/js': 'static',
-    '/min': {
-      root: 'compressed',
-      // miniseconds
-      maxAge: 60000
-    }
-  },
+module.exports = serve({
+  '/js': 'static',
+  '/min': {
+    root: 'compressed',
+    // miniseconds
+    maxAge: 60000
+  }
+}, {
   root: '/path/to/project'
 })
 ```
+
+### serve(files, options)
+
+- **files** `Object` static files to serve
+- **options** `Object` configurations
+  - **root** `path` root path to search the files
+  - **maxAge?** `number=0` Browser cache max-age in milliseconds
 
 ## License
 

@@ -6,8 +6,12 @@ const {ensureLeading} = require('pre-suf')
 const error = require('./error')
 
 const ensurePath = s => ensureLeading(s, '/')
+const maxAgeDefined = m => m || m === 0
 
-const serve = (app, s, cwd) => {
+const serveStatic = (app, s, {
+  root: cwd,
+  maxAge: defaultMaxAge = 0
+}) => {
   Object.keys(s).forEach(staticPath => {
     const def = s[staticPath]
     const {
@@ -19,31 +23,35 @@ const serve = (app, s, cwd) => {
       }
       : def
 
+    const defined = maxAgeDefined(options.maxAge)
+    const maxAge = defined
+      ? options.maxAge
+      : defaultMaxAge
+
     // Compatibility
-    if (options.maxAge) {
-      options.maxage = options.maxAge
+    if (defined) {
+      options.maxAge = maxAge
+      options.maxage = maxAge
     }
 
     const serve = createServe(path.join(cwd, root), options)
-    // Default static root
-    if (staticPath === 'default') {
-      app.use(serve)
-      return
-    }
 
     app.use(mount(ensurePath(staticPath), serve))
   })
 }
 
-module.exports = ({
-  static: staticFiles = {},
-  root
-} = {}) => {
+module.exports = (staticFiles = {}, config = {}) => {
+  if (Object(staticFiles) !== staticFiles) {
+    throw error('INVALID_STATIC_FILES', staticFiles)
+  }
+
+  const {root} = config
+
   if (typeof root !== 'string') {
     throw error('INVALID_STATIC_ROOT', root)
   }
 
   return app => {
-    serve(app, staticFiles, root)
+    serveStatic(app, staticFiles, config)
   }
 }
