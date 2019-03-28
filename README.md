@@ -44,11 +44,13 @@ module.exports = serve({
   '/js': 'static',
   '/min': {
     root: 'compressed',
-    // miniseconds
+    // Override the default max-age
     maxAge: 60000
   }
 }, {
-  root: '/path/to/project'
+  root: '/path/to/project',
+  // Default max-age in miniseconds
+  maxAge: 120000
 })
 ```
 
