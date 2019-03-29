@@ -8,6 +8,10 @@ const error = require('./error')
 const ensurePath = s => ensureLeading(s, '/')
 const maxAgeDefined = m => m || m === 0
 
+const serve = (app, pathname, root, options) => {
+  app.use(mount(pathname, createServe(root, options)))
+}
+
 const serveStatic = (app, s, {
   root: cwd,
   maxAge: defaultMaxAge = 0
@@ -34,9 +38,7 @@ const serveStatic = (app, s, {
       options.maxage = maxAge
     }
 
-    const serve = createServe(path.join(cwd, root), options)
-
-    app.use(mount(ensurePath(staticPath), serve))
+    serve(app, ensurePath(staticPath), path.join(cwd, root), options)
   })
 }
 
@@ -55,3 +57,5 @@ module.exports = (staticFiles = {}, config = {}) => {
     serveStatic(app, staticFiles, config)
   }
 }
+
+module.exports.serve = serve

@@ -38,9 +38,9 @@ project
 app/router.js
 
 ```js
-const serve = require('egg-serve-static')
+const define = require('egg-serve-static')
 
-module.exports = serve({
+module.exports = define({
   '/js': 'static',
   '/min': {
     root: 'compressed',
@@ -54,12 +54,29 @@ module.exports = serve({
 })
 ```
 
-### serve(files, options)
+## define(files, options)
 
 - **files** `Object` static files to serve
 - **options** `Object` configurations
   - **root** `path` root path to search the files
   - **maxAge?** `number=0` Browser cache max-age in milliseconds
+
+Returns `Function(app)` a roe/egg router function which accepts `app` as the only one parameter.
+
+### define.serve(app, path, root, options)
+
+- **app** `RoeApplication | EggApplication`
+- **path** `string` pathname of the request
+- **root** `path`
+- **options** `Object` the same as above
+
+Add the router definition to `app`, then:
+
+```sh
+curl http://localhost:$port$path/a.js
+
+# The content of file `${root}/a.js` will be sent
+```
 
 ## License
 
