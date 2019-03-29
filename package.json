@@ -1,6 +1,6 @@
 {
   "name": "egg-serve-static",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "description": "Utilities to create roe/egg route definitions to serve static files.",
   "main": "src/index.js",
   "scripts": {

@@ -8,7 +8,9 @@ const error = require('./error')
 const ensurePath = s => ensureLeading(s, '/')
 const maxAgeDefined = m => m || m === 0
 
-const serve = (app, pathname, root, options) => {
+const serve = (app, pathname, root, options = {}) => {
+  options.maxage = options.maxAge
+
   app.use(mount(pathname, createServe(root, options)))
 }
 
@@ -32,13 +34,9 @@ const serveStatic = (app, s, {
       ? options.maxAge
       : defaultMaxAge
 
-    // Compatibility
-    if (defined) {
-      options.maxAge = maxAge
-      options.maxage = maxAge
-    }
-
-    serve(app, ensurePath(staticPath), path.join(cwd, root), options)
+    serve(app, ensurePath(staticPath), path.join(cwd, root), {
+      maxAge
+    })
   })
 }
 
