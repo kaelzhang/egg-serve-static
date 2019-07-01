@@ -1,11 +1,11 @@
 {
   "name": "egg-serve-static",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Utilities to create roe/egg route definitions to serve static files.",
   "main": "src/index.js",
   "scripts": {
     "test": "nyc ava --timeout=10s --verbose test/*.test.js",
-    "test-no-report": "NODE_DEBUG=egg-serve-static nyc ava --timeout=10s --verbose test/*.test.js",
+    "test:dev": "NODE_DEBUG=egg-serve-static nyc ava --timeout=10s --verbose test/*.test.js",
     "lint": "eslint .",
     "posttest": "nyc report --reporter=text-lcov > coverage.lcov && codecov"
   },
@@ -34,17 +34,17 @@
     "url": "https://github.com/kaelzhang/egg-serve-static/issues"
   },
   "devDependencies": {
-    "ava": "^1.2.1",
-    "codecov": "^3.2.0",
-    "eslint": "^5.14.0",
-    "eslint-config-ostai": "^1.1.0",
-    "eslint-plugin-import": "^2.13.0",
-    "nyc": "^13.3.0",
-    "roe": "^1.1.0",
+    "ava": "^2.1.0",
+    "codecov": "^3.5.0",
+    "eslint": "^6.0.1",
+    "eslint-config-ostai": "^3.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "nyc": "^14.1.1",
+    "roe": "^2.1.1",
     "supertest": "^4.0.2"
   },
   "dependencies": {
-    "err-object": "^4.0.2",
+    "err-object": "^5.1.2",
     "koa-mount": "^4.0.0",
     "koa-static": "^5.0.0",
     "pre-suf": "^1.1.1"
